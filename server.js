@@ -20,13 +20,18 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 var mysql = require("mysql");
+var connection;
 
-var connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "movieplannerdb"
-});
+if (process.env.JAWSDB_URL) {
+  connection = mysql.createConnection(process.env.JAWSDB_URL);
+} else {
+  connection = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "root",
+    database: "movieplannerdb"
+  });
+}
 
 connection.connect(function(err) {
   if (err) {
